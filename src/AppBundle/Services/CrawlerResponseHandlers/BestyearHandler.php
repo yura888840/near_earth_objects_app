@@ -19,6 +19,8 @@ class BestyearHandler implements ICrawlerResponseHandler
             }
             $data[$year] += $count;
         }
+        unset($data['max_speed']);
+        unset($data['neo']);
 
         return $data;
     }

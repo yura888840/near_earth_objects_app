@@ -19,6 +19,8 @@ class BestmonthHandler implements ICrawlerResponseHandler
             }
             $data[$month] += $count;
         }
+        unset($data['max_speed']);
+        unset($data['neo']);
 
         return $data;
     }

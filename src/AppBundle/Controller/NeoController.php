@@ -104,10 +104,11 @@ class NeoController extends FOSRestController
 
         try {
             $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
-            sort($result);
-            $count = reset($result);
-            $year = key($result);
+            asort($result);
+            $count  = end($result);
+            $year   = key($result);
             $response = [$year => $count];
+//            var_dump($count, $year, $response, $result); die();
         } catch (\Exception $e) {
             $response = [
                 'error' => sprintf('%s: %s,%d', get_class($e), $e->getMessage(), $e->getCode())
@@ -141,9 +142,9 @@ class NeoController extends FOSRestController
 
         try {
             $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
-            sort($result);
-            $count = reset($result);
-            $month = key($result);
+            asort($result);
+            $count  = end($result);
+            $month  = key($result);
             $response = [$month => $count];
         } catch (\Exception $e) {
             $response = [
