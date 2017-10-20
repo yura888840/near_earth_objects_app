@@ -108,7 +108,6 @@ class NeoController extends FOSRestController
             $count  = end($result);
             $year   = key($result);
             $response = [$year => $count];
-//            var_dump($count, $year, $response, $result); die();
         } catch (\Exception $e) {
             $response = [
                 'error' => sprintf('%s: %s,%d', get_class($e), $e->getMessage(), $e->getCode())
