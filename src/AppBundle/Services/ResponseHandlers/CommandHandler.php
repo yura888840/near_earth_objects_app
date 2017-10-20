@@ -47,7 +47,7 @@ class CommandHandler implements IResponseHandler
                     try {
                         $this->em->merge($neoObject);
                     } catch (ORMInvalidArgumentException $e) {
-
+                        throw new DatabaseErrorException($e->getMessage(), $e->getCode(), $e);
                     }
                 }
             }
