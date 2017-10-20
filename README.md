@@ -1,11 +1,11 @@
-Project for data manituplation with Near Earh Objects from NASA
-===============================================================
+Project for data manituplation with Near Earh Objects
+=====================================================
 
 Fork repository
 
 After this, you should do first of all
 ```
-composer install
+    composer install
 ```
 
 You will be asked for database connection settings.
@@ -35,6 +35,7 @@ So, you can test it in http://127.0.0.1:8000
 
 Sample requests are:
  http://127.0.0.1:8000/neo/hazardous
+ 
  http://127.0.0.1:8000/neo/best-year?hazardous=true
 
 To run unit tests
