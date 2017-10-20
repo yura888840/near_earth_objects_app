@@ -34,6 +34,7 @@ can run it by
 So, you can test it in http://127.0.0.1:8000
 
 Sample requests are:
+
  http://127.0.0.1:8000/neo/hazardous
  
  http://127.0.0.1:8000/neo/best-year?hazardous=true
