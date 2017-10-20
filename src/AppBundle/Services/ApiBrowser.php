@@ -40,19 +40,16 @@ class ApiBrowser
         $url    = ApiClient::NEO_BROWSE;
         $data   = [
             'max_speed' => 0,
-            'neo' => [],
+            'neo'       => [],
         ];
-        $c      = 0;
 
         while (!empty($url)) {
-            echo "$c Doing request to: $url<br>";
-
             $result = $this->apiClient->doRequest($url, [], $responseHandler);
             $data = $crawlerResponseHandler->handleBrowserResponse($result, $data);
 
             $url = $result['next'];
-            $c++;
         }
+
         return $data;
     }
 }

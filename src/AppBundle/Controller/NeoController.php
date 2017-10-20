@@ -31,11 +31,18 @@ class NeoController extends FOSRestController
         /** @var EntityManager $em */
         $em = $this->get('doctrine')->getManager();
 
-        $data = $em->getRepository('AppBundle:NearEarthObject')->findBy(['isHazardous' => true]);
-        $data = $serializer->serialize($data, 'json');
+        try {
+            $data = $em->getRepository('AppBundle:NearEarthObject')->findBy(['isHazardous' => true]);
+            $content = $serializer->serialize($data, 'json');
+        } catch (\Exception $e) {
+            $response = [
+                'error' => sprintf('%s: %s,%d', get_class($e), $e->getMessage(), $e->getCode())
+            ];
+            $content = json_encode($response);
+        }
 
         $response = new JsonResponse();
-        $response->setContent($data);
+        $response->setContent($content);
 
         return $response;
     }
@@ -61,9 +68,16 @@ class NeoController extends FOSRestController
         /** @var ApiBrowser $crawler */
         $crawler = $this->get('api.browser');
 
-        $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
+        try {
+            $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
+            $response = $result['neo'];
+        } catch (\Exception $e) {
+            $response = [
+                'error' => sprintf('%s: %s,%d', get_class($e), $e->getMessage(), $e->getCode())
+            ];
+        }
 
-        return new JsonResponse($result['neo']);
+        return new JsonResponse($response);
     }
 
     /**
@@ -88,13 +102,19 @@ class NeoController extends FOSRestController
         /** @var ApiBrowser $crawler */
         $crawler = $this->get('api.browser');
 
-        $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
+        try {
+            $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
+            sort($result);
+            $count = reset($result);
+            $year = key($result);
+            $response = [$year => $count];
+        } catch (\Exception $e) {
+            $response = [
+                'error' => sprintf('%s: %s,%d', get_class($e), $e->getMessage(), $e->getCode())
+            ];
+        }
 
-        sort($result);
-        $count = reset($result);
-        $year = key($result);
-
-        return new JsonResponse([$year => $count]);
+        return new JsonResponse($response);
     }
 
     /**
@@ -119,12 +139,18 @@ class NeoController extends FOSRestController
         /** @var ApiBrowser $crawler */
         $crawler = $this->get('api.browser');
 
-        $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
+        try {
+            $result = $crawler->browse($responseHandler, $crawlerResponseHandler);
+            sort($result);
+            $count = reset($result);
+            $month = key($result);
+            $response = [$month => $count];
+        } catch (\Exception $e) {
+            $response = [
+                'error' => sprintf('%s: %s,%d', get_class($e), $e->getMessage(), $e->getCode())
+            ];
+        }
 
-        sort($result);
-        $count = reset($result);
-        $month = key($result);
-
-        return new JsonResponse([$month => $count]);
+        return new JsonResponse($response);
     }
 }

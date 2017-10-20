@@ -67,13 +67,13 @@ class ApiClient
         }
 
         if (200 !== $result->getStatusCode()) {
-            throw new ErrorWhileRequestingApiException;
+            throw new ErrorWhileRequestingApiException();
         }
 
         $data = json_decode($result->getBody()->getContents(), true);
 
         if (false === $data) {
-            throw new InvalidDataFromApiException;
+            throw new InvalidDataFromApiException();
         }
 
         return $handler->handleResponse($data);
