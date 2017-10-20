@@ -9,8 +9,9 @@
 namespace Tests\AppBundle\Services\CrawlerResponseHandlers;
 
 use AppBundle\Services\CrawlerResponseHandlers\BestmonthHandler;
+use PHPUnit\Framework\TestCase;
 
-class BestmonthHandlerTest extends \PHPUnit_Framework_TestCase
+class BestmonthHandlerTest extends TestCase
 {
     /** @var  BestmonthHandler */
     private $service;

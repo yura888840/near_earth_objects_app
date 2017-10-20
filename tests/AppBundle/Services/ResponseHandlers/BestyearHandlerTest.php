@@ -9,8 +9,9 @@
 namespace Tests\AppBundle\Services\ResponseHandlers;
 
 use AppBundle\Services\ResponseHandlers\BestyearHandler;
+use PHPUnit\Framework\TestCase;
 
-class BestyearHandlerTest extends \PHPUnit_Framework_TestCase
+class BestyearHandlerTest extends TestCase
 {
     /** @var BestyearHandler */
     private $service;
@@ -20,7 +21,7 @@ class BestyearHandlerTest extends \PHPUnit_Framework_TestCase
         $this->service = new BestyearHandler();
     }
 
-    public function testHandleBrowserResponse()
+    public function testHandleResponse()
     {
         $data = [
             'near_earth_objects' => [
@@ -60,6 +61,18 @@ class BestyearHandlerTest extends \PHPUnit_Framework_TestCase
                     'field1' => '...',
                     'field2' => '...'
                 ],
+                [
+                    'id' => 4,
+                    'is_potentially_hazardous_asteroid' => false,
+                    'close_approach_data' => [
+                        [
+                            'close_approach_date' => '2017-02-01',
+                            'field1' => '...'
+                        ],
+                    ],
+                    'field1' => '...',
+                    'field2' => '...'
+                ],
             ],
             'links' => [
                 'next' => 'some_link'
@@ -69,12 +82,12 @@ class BestyearHandlerTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'next' => 'some_link',
             'data' => [
-                '2017' => 1,
-                '2015' => 2
+                '2017' => 2,
+                '2015' => 1
             ]
         ];
 
-        $actual = $this->service->handleBrowserResponse($data);
+        $actual = $this->service->handleResponse($data);
 
         $this->assertEquals($actual, $expected);
     }

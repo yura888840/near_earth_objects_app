@@ -9,8 +9,9 @@
 namespace Tests\AppBundle\Services\CrawlerResponseHandlers;
 
 use AppBundle\Services\CrawlerResponseHandlers\BestyearHandler;
+use PHPUnit\Framework\TestCase;
 
-class BestyearHandlerTest extends \PHPUnit_Framework_TestCase
+class BestyearHandlerTest extends TestCase
 {
     /** @var  BestyearHandler */
     private $service;

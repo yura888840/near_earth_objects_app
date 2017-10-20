@@ -10,8 +10,9 @@ namespace Tests\AppBundle\Services\ResponseHandlers;
 
 use AppBundle\Services\ResponseHandlers\CommandHandler;
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\TestCase;
 
-class CommandHandlerTest extends \PHPUnit_Framework_TestCase
+class CommandHandlerTest extends TestCase
 {
     /** @var CommandHandler */
     private $service;
@@ -25,7 +26,14 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
 
         $em
             ->expects($this->any())
-            ->method('all')
+            ->method('merge')
+            ->withAnyParameters()
+            ->will($this->returnValue(true))
+        ;
+
+        $em
+            ->expects($this->any())
+            ->method('flush')
             ->withAnyParameters()
             ->will($this->returnValue(true))
         ;
@@ -33,7 +41,7 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
         $this->service = new CommandHandler($em);
     }
 
-    public function testHandleBrowserResponse()
+    public function testHandleResponse()
     {
         $data = [
             'element_count' => 2,
@@ -45,7 +53,7 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
 
         $expected = 2;
 
-        $actual = $this->service->handleBrowserResponse($data);
+        $actual = $this->service->handleResponse($data);
 
         $this->assertEquals($actual, $expected);
     }

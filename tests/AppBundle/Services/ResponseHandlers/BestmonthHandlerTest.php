@@ -9,8 +9,9 @@
 namespace Tests\AppBundle\Services\ResponseHandlers;
 
 use AppBundle\Services\ResponseHandlers\BestmonthHandler;
+use PHPUnit\Framework\TestCase;
 
-class BestmonthHandlerTest extends \PHPUnit_Framework_TestCase
+class BestmonthHandlerTest extends TestCase
 {
     /** @var BestmonthHandler */
     private $service;
@@ -20,7 +21,7 @@ class BestmonthHandlerTest extends \PHPUnit_Framework_TestCase
         $this->service = new BestmonthHandler();
     }
 
-    public function testHandleBrowserResponse()
+    public function testHandleResponse()
     {
         $data = [
             'near_earth_objects' => [
@@ -73,7 +74,7 @@ class BestmonthHandlerTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $actual = $this->service->handleBrowserResponse($data);
+        $actual = $this->service->handleResponse($data);
 
         $this->assertEquals($actual, $expected);
     }

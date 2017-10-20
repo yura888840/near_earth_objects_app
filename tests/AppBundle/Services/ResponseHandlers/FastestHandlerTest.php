@@ -9,8 +9,9 @@
 namespace Tests\AppBundle\Services\ResponseHandlers;
 
 use AppBundle\Services\ResponseHandlers\FastestHandler;
+use PHPUnit\Framework\TestCase;
 
-class FastestHandlerTest extends \PHPUnit_Framework_TestCase
+class FastestHandlerTest extends TestCase
 {
     /** @var FastestHandler */
     private $service;
@@ -20,7 +21,7 @@ class FastestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->service = new FastestHandler();
     }
 
-    public function testHandleBrowserResponse()
+    public function testHandleResponse()
     {
         $data = [
             'near_earth_objects' => [
@@ -95,7 +96,7 @@ class FastestHandlerTest extends \PHPUnit_Framework_TestCase
             'max_speed' => 10
         ];
 
-        $actual = $this->service->handleBrowserResponse($data);
+        $actual = $this->service->handleResponse($data);
 
         $this->assertEquals($actual, $expected);
     }

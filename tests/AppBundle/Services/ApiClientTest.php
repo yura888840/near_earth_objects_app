@@ -11,14 +11,45 @@ namespace Tests\AppBundle\Services;
 use AppBundle\Services\ApiClient;
 use AppBundle\Services\ResponseHandlers\IResponseHandler;
 use GuzzleHttp\Client;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
-class ApiClientTest extends \PHPUnit_Framework_TestCase
+class ApiClientTest extends TestCase
 {
     /** @var ApiClient */
     private $service;
 
     public function setUp()
     {
+        $dummyBody = $this
+            ->getMockBuilder(StreamInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $dummyBody
+            ->expects($this->any())
+            ->method('getContents')
+            ->withAnyParameters()
+            ->will($this->returnValue('{}'))
+        ;
+
+        $dummyResponse = $this
+            ->getMockBuilder(ResponseInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $dummyResponse
+            ->expects($this->any())
+            ->method('getStatusCode')
+            ->withAnyParameters()
+            ->will($this->returnValue(200))
+        ;
+        $dummyResponse
+            ->expects($this->any())
+            ->method('getBody')
+            ->withAnyParameters()
+            ->will($this->returnValue($dummyBody))
+        ;
+
         $apiKey = 'SOME_DUMMY_KEY';
         $client = $this
             ->getMockBuilder(Client::class)
@@ -27,9 +58,9 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
 
         $client
             ->expects($this->any())
-            ->method('all')
+            ->method('request')
             ->withAnyParameters()
-            ->will($this->returnValue(true))
+            ->will($this->returnValue($dummyResponse))
         ;
         $this->service = new ApiClient($client, $apiKey);
     }
@@ -43,7 +74,7 @@ class ApiClientTest extends \PHPUnit_Framework_TestCase
 
         $responseHandler
             ->expects($this->any())
-            ->method('all')
+            ->method('handleResponse')
             ->withAnyParameters()
             ->will($this->returnValue(true))
         ;

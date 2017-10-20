@@ -9,8 +9,9 @@
 namespace Tests\AppBundle\Services\CrawlerResponseHandlers;
 
 use AppBundle\Services\CrawlerResponseHandlers\FastestHandler;
+use PHPUnit\Framework\TestCase;
 
-class FastestHandlerTest extends \PHPUnit_Framework_TestCase
+class FastestHandlerTest extends TestCase
 {
     /** @var FastestHandler */
     private $service;
